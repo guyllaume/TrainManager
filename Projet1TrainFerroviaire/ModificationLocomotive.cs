@@ -12,13 +12,24 @@ namespace Projet1TrainFerroviaire
 {
     public partial class ModificationLocomotive : Form
     {
+        // Accesseur publique et mutateur privé
         public TrainFerroviaire train { get; private set; }
+
+        // Constructeur qui prend un TrainFerroviaire en paramètre
         public ModificationLocomotive(TrainFerroviaire trainFerroviaire)
         {
             InitializeComponent();
+
+            // Initialisation du train
             train = trainFerroviaire;
+
+            // Récupération de la locomotive du train
             Locomotive loco = (Locomotive)trainFerroviaire.Train[0];
+
+            // Remplissage du champ de texte avec le nom de la locomotive
             nomLocomotive_txt.Text = loco.Nom;
+
+            // Vérification du type de locomotive et mise à jour des boutons radio
             switch (loco.TypeLocomotive)
             {
                 case typeLocomotive.longVoyage:
@@ -31,7 +42,9 @@ namespace Projet1TrainFerroviaire
                     courtVoyage_rbtn.Checked = true;
                     break;
             }
-            if(loco.Couleur == Color.Blue)
+
+            // Vérification de la couleur de la locomotive et mise à jour des boutons radio
+            if (loco.Couleur == Color.Blue)
             {
                 blue_rbtn.Checked = true;
             }else if(loco.Couleur == Color.Brown)
@@ -44,6 +57,7 @@ namespace Projet1TrainFerroviaire
 
         }
 
+        // Événement déclenché lors du clic sur le bouton "Modifier Locomotive"
         private void modifierLocomotive_btn_Click(object sender, EventArgs e)
         {
             //Radio button couleur
@@ -60,16 +74,20 @@ namespace Projet1TrainFerroviaire
 
             try
             {
+                // Vérification si le type de locomotive ou la couleur est null
                 if (typeLoco == null) { throw new Exception("Aucun type de locomotive a été choisi."); }
                 if (couleur == null) { throw new Exception("Aucune couleur a été choisi."); }
 
+                // Modification des propriétés de la locomotive
                 train.Modifier(nomLocomotive_txt.Text, (typeLocomotive)typeLoco, (Color)couleur);
-               
+
+                // Fermeture du formulaire et retour du résultat OK
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             catch (Exception ex) when (ex is Exception || ex is ChaineException || ex is EntierException || ex is ExplosionException || ex is TrainException || ex is VitesseException)
             {
+                // Affiche un message d'erreur en cas d'exception
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

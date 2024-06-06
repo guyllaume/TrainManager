@@ -296,7 +296,6 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "AddTrainForm";
             this.Text = "Ajout du Train";
-            this.Load += new System.EventHandler(this.AddTrainForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);

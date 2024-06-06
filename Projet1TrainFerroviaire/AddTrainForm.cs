@@ -16,11 +16,10 @@ namespace Projet1TrainFerroviaire
         public AddTrainForm()
         {
             InitializeComponent();
-        }
 
-        private void AddTrainForm_Load(object sender, EventArgs e)
-        {
-
+            // Sélectionne le premier élément des ComboBoxes au démarrage
+            caboose_cb.SelectedIndex = 0;
+            wagon_cb.SelectedIndex = 0;
         }
 
         private void AddTrain_btn_Click(object sender, EventArgs e)
@@ -39,13 +38,20 @@ namespace Projet1TrainFerroviaire
 
             try
             {
-                if(typeLoco == null) { throw new Exception("Aucun type de locomotive a été choisi."); }
+                // Vérifie si le type de locomotive et la couleur sont sélectionnés
+                if (typeLoco == null) { throw new Exception("Aucun type de locomotive a été choisi."); }
                 if(couleur == null) { throw new Exception("Aucune couleur a été choisi."); }
 
+                // Crée une nouvelle instance de Locomotive
                 Locomotive locomotive = new Locomotive((typeLocomotive)typeLoco, nomLocomotive_txt.Text, (Color)couleur);
+
+                // Crée une Liste pour stocker les véhicules
                 List<Véhicule> listVehicules = new List<Véhicule>();
+
+                // Ajoute les wagons
                 for (int i = 0; i < int.Parse(wagon_cb.SelectedItem.ToString()); i++)
                 {
+                    // Création d'un formulaire d'ajout d'un Wagon
                     using (AddWagon addWagon = new AddWagon())
                     {
                         if (addWagon.ShowDialog() == DialogResult.OK)
@@ -54,8 +60,11 @@ namespace Projet1TrainFerroviaire
                         }
                     }
                 }
+
+                // Ajoute les Cabooses
                 for (int i = 0; i < int.Parse(caboose_cb.SelectedItem.ToString()); i++)
                 {
+                    // Création d'un formulaire d'ajout d'un Caboose
                     using (AddCaboose addCaboose = new AddCaboose())
                     {
                         if (addCaboose.ShowDialog() == DialogResult.OK)
@@ -64,15 +73,19 @@ namespace Projet1TrainFerroviaire
                         }
                     }
                 }
+
+                // Crée une nouvelle instance de TrainFerroviaire
                 if (listVehicules.Count == 0)
                     trainFerroviaire = new TrainFerroviaire(nomTrain_txt.Text, locomotive);
                 else
                     trainFerroviaire = new TrainFerroviaire(nomTrain_txt.Text, locomotive, listVehicules);
 
+                // Ferme le formulaire avec un résultat OK
                 this.DialogResult = DialogResult.OK;
                 this.Close();
-            }catch(Exception ex) when (ex is Exception || ex is ChaineException || ex is EntierException || ex is ExplosionException || ex is TrainException || ex is VitesseException) 
+            }catch(Exception ex) when (ex is Exception || ex is ChaineException || ex is EntierException || ex is ExplosionException || ex is TrainException || ex is VitesseException || ex is NullReferenceException)
             {
+                // Affiche un message d'erreur en cas d'exception
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 

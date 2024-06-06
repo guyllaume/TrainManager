@@ -12,17 +12,16 @@ namespace Projet1TrainFerroviaire
 {
     public partial class AddWagon : Form
     {
+        // Accesseur publique et mutateur privé
         public Wagon wagon { get; private set; }
+
+        // Constructeur par défaut
         public AddWagon()
         {
             InitializeComponent();
         }
 
-        private void AddWagon_Load(object sender, EventArgs e)
-        {
-
-        }
-
+        // Événement déclenché lors du clic sur le bouton "Ajouter Wagon"
         private void addWagon_btn_Click(object sender, EventArgs e)
         {
             //Radio button type wagon
@@ -37,18 +36,23 @@ namespace Projet1TrainFerroviaire
             if (gray_rbtn.Checked) { couleur = Color.Gray; }
             if (wood_rbtn.Checked) { couleur = Color.Brown; }
             if (black_rbtn.Checked) { couleur = Color.Black; }
+
             try
             {
+                // Vérification si le type de locomotive ou la couleur est null
                 if (typeWagon == null) { throw new Exception("Aucun type de wagon a été choisi."); }
                 if (couleur == null) { throw new Exception("Aucune couleur a été choisi."); }
 
+                // Crée une nouvelle instance de Wagon
                 wagon = new Wagon((typeW)typeWagon,wagon_txt.Text, (Color)couleur);
 
+                //Ferme le form avec succes
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             catch (Exception ex) when (ex is Exception || ex is ChaineException || ex is EntierException)
             {
+                // Affiche un message d'erreur en cas d'exception
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

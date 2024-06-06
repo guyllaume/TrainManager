@@ -36,7 +36,7 @@ namespace Projet1TrainFerroviaire
             {
                 case typeLocomotive.longVoyage:
                     CoefficientFriction = 0.001;
-                    CapacitéDeTirageTotale = 50000;
+                    CapacitéDeTirageTotale = 5000;
                     Masse = 1000;
                     Vitesse = 35;
                     break;

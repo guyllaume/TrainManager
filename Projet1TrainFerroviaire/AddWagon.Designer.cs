@@ -236,7 +236,6 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "AddWagon";
             this.Text = "Ajout du Wagon";
-            this.Load += new System.EventHandler(this.AddWagon_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
